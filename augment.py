@@ -3,6 +3,7 @@ import matplotlib.patches as patches
 from dataset import *
 from PIL import Image
 from torchvision import transforms
+import torch
 
 def join_objects(img_ids, aug_img, dataset):
   boxes_list = list()
@@ -35,6 +36,9 @@ def join_objects(img_ids, aug_img, dataset):
 
 def get_mask(input_img):
   # https://pytorch.org/hub/pytorch_vision_deeplabv3_resnet101/
+  model = torch.hub.load('pytorch/vision:v0.6.0', 'deeplabv3_resnet101', pretrained=True)
+  model.eval()
+  
   preprocess = transforms.Compose([
       transforms.ToTensor(),
       transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
