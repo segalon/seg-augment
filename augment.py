@@ -11,10 +11,10 @@ def join_objects(img_ids, aug_img, dataset):
   for i, img_id in enumerate(img_ids):
     path = dataset.image_reference(img_id)
     k_img = Image.open(path)
-    mask = get_mask(k_img)
     img = dataset.load_image(img_id)
     img = np.asarray(img)
-
+    
+    mask = get_mask(k_img)
     idx = np.nonzero(mask)
 
     aug_img[add_idx(idx, i*jmp, i*jmp)] = img[idx]
